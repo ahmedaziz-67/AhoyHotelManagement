@@ -8,7 +8,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
 {
     public interface IHotelService
     {
-        Task<GetHotelsDto> GetAllHotels();
+        Task<GetHotelsDto> GetAllHotels(PaginationParameters paginationParameters);
         Task CreateHotel(CreateHotelDto createHotelDto);
         Task<GetHotel> GetHotel(Guid Id);
         Task<GetHotelsDto> GetFilteredHotels(string FilterName, string FilterValue);
@@ -30,10 +30,10 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
             _unitOfWork.Save();
         }
 
-        public async Task<GetHotelsDto> GetAllHotels()
+        public async Task<GetHotelsDto> GetAllHotels(PaginationParameters paginationParameters)
         {
-            var hotel = await _unitOfWork.hotelRepository.GetAllAsync();
-            var result = _mapper.Map<IEnumerable<Hotel>, IEnumerable<HotelDto>>(hotel);
+            var pagedHotel = await _unitOfWork.hotelRepository.GetPagedList(paginationParameters);
+            var result = _mapper.Map<IEnumerable<Hotel>, IEnumerable<HotelDto>>(pagedHotel);
             GetHotelsDto getHotelsDto = new GetHotelsDto
             {
                 hotelDto = result.ToList(),

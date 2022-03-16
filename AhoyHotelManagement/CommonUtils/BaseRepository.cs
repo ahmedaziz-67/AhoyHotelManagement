@@ -1,6 +1,8 @@
 ﻿using AhoyHotelManagement.DAL.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
+using X.PagedList;
 
 namespace AhoyHotelManagement.CommonUtils
 {
@@ -14,6 +16,10 @@ namespace AhoyHotelManagement.CommonUtils
         IQueryable<T> Include(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includeExpressions);
         Task<IEnumerable<T>> ExcuteQuerys(string query, params object[] parameters);
         public Task<dynamic> ExcuteQuery(string query, params object[] parameters);
+        Task<IPagedList<T>> GetPagedList(
+           PaginationParameters paginationParameters,
+           Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null
+           );
     }
 
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
@@ -63,6 +69,19 @@ namespace AhoyHotelManagement.CommonUtils
         public async Task<dynamic> ExcuteQuery(string query, params object[] parameters)
         {
             return await DbSet.FromSqlRaw(query, parameters).ToListAsync();
+        }
+        public async Task<IPagedList<T>> GetPagedList(PaginationParameters paginationParameters, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        {
+            IQueryable<T> query = DbSet;
+
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            return await query.AsNoTracking()
+                .ToPagedListAsync(paginationParameters.PageNumber, paginationParameters.PageSize);
         }
     }
 }

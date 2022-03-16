@@ -25,16 +25,16 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Controllers
 
                 return Ok(new BaseResponse { Status="Succuess",Message="Hotel Created Successfuly."});
             }
-            catch (Exception e) { return Ok(); }
+            catch (Exception e) { return BadRequest(); }
 
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetAllHotels()
+        [HttpPost("GetAllHotels")]
+        public async Task<ActionResult> GetAllHotels(PaginationParameters paginationParameters)
         {
             try
             {
-                var result = await _hotelService.GetAllHotels();
+                var result = await _hotelService.GetAllHotels(paginationParameters);
 
                 return Ok(result);
             }
@@ -51,7 +51,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Controllers
 
                 return Ok(result);
             }
-            catch (Exception e) { return Ok(); }
+            catch (Exception e) {return BadRequest(); }
 
         }
         [HttpGet("FilterHotels")]
