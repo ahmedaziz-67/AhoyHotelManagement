@@ -25,7 +25,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Controllers
 
                 return Ok(new BaseResponse { Status="Succuess",Message="Hotel Created Successfuly."});
             }
-            catch (Exception e) { return BadRequest(); }
+            catch (Exception e) { return BadRequest(new BaseResponse { Status="Unexpected Error",Message=e.ToString()}); }
 
         }
 
@@ -38,7 +38,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Controllers
 
                 return Ok(result);
             }
-            catch (Exception e) { return Ok(); }
+            catch (Exception e) { return BadRequest(new BaseResponse { Status = "Unexpected Error", Message = e.ToString() }); }
 
         }
 
@@ -51,7 +51,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Controllers
 
                 return Ok(result);
             }
-            catch (Exception e) {return BadRequest(); }
+            catch (Exception e) {return BadRequest(new BaseResponse { Status = "Unexpected Error", Message = e.ToString() }); }
 
         }
         [HttpGet("FilterHotels")]
@@ -63,7 +63,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Controllers
 
                 return Ok(result);
             }
-            catch (Exception e) { return Ok(); }
+            catch (Exception e) { return BadRequest(new BaseResponse { Status = "Unexpected Error", Message = e.ToString() }); }
 
         }
     }

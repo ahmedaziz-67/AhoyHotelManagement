@@ -1,4 +1,5 @@
 ﻿using AhoyHotelManagement.Business_Logic_Layer.Services;
+using AhoyHotelManagement.CommonUtils;
 using AhoyHotelManagement.DAL.Presistence.DTOS.Booking;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,7 +26,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Controllers
 
                 return Ok(result);
             }
-            catch (Exception e) { return Ok(); }
+            catch (Exception e) { return BadRequest( new BaseResponse { Status = "Unxpected Error", Message = e.ToString() }); }
 
         }
     }

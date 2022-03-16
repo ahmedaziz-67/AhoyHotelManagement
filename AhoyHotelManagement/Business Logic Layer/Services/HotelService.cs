@@ -10,7 +10,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
     {
         Task<GetHotelsDto> GetAllHotels(PaginationParameters paginationParameters);
         Task CreateHotel(CreateHotelDto createHotelDto);
-        Task<GetHotel> GetHotel(Guid Id);
+        Task<GetHotelDto> GetHotel(Guid Id);
         Task<GetHotelsDto> GetFilteredHotels(string FilterName, string FilterValue);
     }
 
@@ -25,31 +25,40 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
         }
         public async Task CreateHotel(CreateHotelDto createHotelDto)
         {
-            var hotelEntry =  _mapper.Map<CreateHotelDto, Hotel>(createHotelDto);
-          await  _unitOfWork.hotelRepository.AddAsync(hotelEntry);
-            _unitOfWork.Save();
+            
+                var hotelEntry = _mapper.Map<CreateHotelDto, Hotel>(createHotelDto);
+                await _unitOfWork.hotelRepository.AddAsync(hotelEntry);
+                _unitOfWork.Save();
+         
         }
 
         public async Task<GetHotelsDto> GetAllHotels(PaginationParameters paginationParameters)
         {
-            var pagedHotel = await _unitOfWork.hotelRepository.GetPagedList(paginationParameters);
-            var result = _mapper.Map<IEnumerable<Hotel>, IEnumerable<HotelDto>>(pagedHotel);
-            GetHotelsDto getHotelsDto = new GetHotelsDto
+            try {
+                var pagedHotel = await _unitOfWork.hotelRepository.GetPagedList(paginationParameters);
+                var result = _mapper.Map<IEnumerable<Hotel>, IEnumerable<HotelDto>>(pagedHotel);
+                GetHotelsDto getHotelsDto = new GetHotelsDto
+                {
+                    hotelDto = result.ToList(),
+                    Status = "Success",
+                    Message = "This is all avaliable hotels right now"
+                };
+                return getHotelsDto;
+            }
+            catch (Exception ex)
             {
-                hotelDto = result.ToList(),
-                Status = "Success",
-                Message = "This is all avaliable hotels right now"
-            };
-            return getHotelsDto;
+                return new GetHotelsDto { Status = "Unexpected Error", Message = ex.ToString() };
+            }
+            
 
         }
 
-        public async Task<GetHotel> GetHotel(Guid Id)
+        public async Task<GetHotelDto> GetHotel(Guid Id)
         {
             try
             {
                 var hotelDetails = await _unitOfWork.hotelRepository.GetHotelDetails(Id);
-                var result = _mapper.Map<Hotel, GetHotel>(hotelDetails);
+                var result = _mapper.Map<Hotel, GetHotelDto>(hotelDetails);
                 return result;
             }
             catch (Exception ex)

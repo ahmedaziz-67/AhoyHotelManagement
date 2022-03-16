@@ -1,6 +1,6 @@
 ﻿namespace AhoyHotelManagement.DAL.Presistence.DTOS.Hotel
 {
-    public class GetHotel
+    public class GetHotelDto
     {
         public string Name { get; set; }
         public string Rating { get; set; }

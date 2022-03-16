@@ -27,20 +27,28 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
         }
         public async Task<BookingResponseDto> BookHotel(BookHotelDto bookHotelDto)
         {
-            var bookingEntry = _mapper.Map<BookHotelDto, Booking>(bookHotelDto);
-            await _unitOfWork.bookingRepository.AddAsync(bookingEntry);
-            _unitOfWork.Save();
-           var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value; ;
-            var user = await _userManager.FindByIdAsync(userId);
-            BookingResponseDto response = new BookingResponseDto
+            try
             {
-                Status = "Success",
-                Message = "Your hotel booking has been completed.",
-                UserName = user.UserName,
-                HotelName = bookingEntry.Room.Hotels.Name,
-                RoomNumber = bookingEntry.Room.RoomNumber
-            };
-            return response;
+                var bookingEntry = _mapper.Map<BookHotelDto, Booking>(bookHotelDto);
+                await _unitOfWork.bookingRepository.AddAsync(bookingEntry);
+                _unitOfWork.Save();
+                var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value; ;
+                var user = await _userManager.FindByIdAsync(userId);
+                BookingResponseDto response = new BookingResponseDto
+                {
+                    Status = "Success",
+                    Message = "Your hotel booking has been completed.",
+                    UserName = user.UserName,
+                    HotelName = bookingEntry.Room.Hotels.Name,
+                    RoomNumber = bookingEntry.Room.RoomNumber
+                };
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return new BookingResponseDto { Status = "Unxpected Error", Message = ex.ToString() };
+            }
+           
         }
     }
 }

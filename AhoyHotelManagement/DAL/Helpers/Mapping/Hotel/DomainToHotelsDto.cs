@@ -12,7 +12,7 @@ namespace AhoyHotelManagement.DAL.Helpers.Mapping
                 .ForMember(x=>x.Name,opt=>opt.MapFrom(src=>src.Facilitiy.Name));
             CreateMap<HotelImage, HotelImagesDto>();
             CreateMap<Hotel, HotelDto>();
-            CreateMap<Hotel, GetHotel>();
+            CreateMap<Hotel, GetHotelDto>();
         }
     }
 }

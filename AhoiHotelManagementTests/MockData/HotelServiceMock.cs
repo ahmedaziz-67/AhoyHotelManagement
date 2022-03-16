@@ -7,7 +7,6 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AhoiHotelManagementTests.MockData
@@ -48,11 +47,11 @@ namespace AhoiHotelManagementTests.MockData
             throw new NotImplementedException();
         }
 
-        public async Task<GetHotel> GetHotel(Guid Id)
+        public async Task<GetHotelDto> GetHotel(Guid Id)
         {
            var getHotel=  _hotel.Where(a => a.Id == Id)
              .FirstOrDefault();
-            var result =  _mapper.Map<Hotel, GetHotel>(getHotel);
+            var result =  _mapper.Map<Hotel, GetHotelDto>(getHotel);
             return result;
         }
     }
