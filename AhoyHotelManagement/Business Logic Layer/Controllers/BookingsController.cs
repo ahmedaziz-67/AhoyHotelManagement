@@ -19,6 +19,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Controllers
         }
         /// <summary>
         /// This endpoint for placing a booking.
+        /// Users should rigester and login  first before they can place a booking.
         /// </summary>
         /// <param name="booking"></param>
         /// <returns></returns>
