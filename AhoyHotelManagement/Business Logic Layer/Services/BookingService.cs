@@ -7,11 +7,13 @@ using System.Security.Claims;
 
 namespace AhoyHotelManagement.Business_Logic_Layer.Services
 {
+    #region Service
     public interface IBookingService
     {
         Task<BookingResponseDto> BookHotel(BookHotelDto bookHotelDto);
     }
-
+    #endregion
+    #region Implementation
     public class BookingService : IBookingService
     {
         private readonly IMapper _mapper;
@@ -29,18 +31,15 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
         {
             try
             {
+                var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value; 
                 var bookingEntry = _mapper.Map<BookHotelDto, Booking>(bookHotelDto);
+                bookingEntry.UserId = userId;
                 await _unitOfWork.bookingRepository.AddAsync(bookingEntry);
                 _unitOfWork.Save();
-                var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value; ;
-                var user = await _userManager.FindByIdAsync(userId);
                 BookingResponseDto response = new BookingResponseDto
                 {
                     Status = "Success",
-                    Message = "Your hotel booking has been completed.",
-                    UserName = user.UserName,
-                    HotelName = bookingEntry.Room.Hotels.Name,
-                    RoomNumber = bookingEntry.Room.RoomNumber
+                    Message = "Your hotel booking has been completed."
                 };
                 return response;
             }
@@ -51,4 +50,5 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
            
         }
     }
+    #endregion
 }

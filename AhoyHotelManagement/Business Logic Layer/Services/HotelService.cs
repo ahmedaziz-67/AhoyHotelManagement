@@ -6,6 +6,7 @@ using AutoMapper;
 
 namespace AhoyHotelManagement.Business_Logic_Layer.Services
 {
+    #region Service
     public interface IHotelService
     {
         Task<GetHotelsDto> GetAllHotels(PaginationParameters paginationParameters);
@@ -13,7 +14,8 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
         Task<GetHotelDto> GetHotel(Guid Id);
         Task<GetHotelsDto> GetFilteredHotels(string FilterName, string FilterValue);
     }
-
+    #endregion
+    #region Implementation
     public class HotelService : IHotelService
     {
         private readonly IMapper _mapper;
@@ -31,6 +33,7 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
                 _unitOfWork.Save();
          
         }
+ 
 
         public async Task<GetHotelsDto> GetAllHotels(PaginationParameters paginationParameters)
         {
@@ -121,4 +124,5 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
             };
         }
     }
+    #endregion
 }

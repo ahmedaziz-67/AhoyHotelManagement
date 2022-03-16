@@ -5,14 +5,17 @@
         public Hotel()
         {
             Id = Guid.NewGuid();
+            Images = new List<HotelImage>();
+            Rooms = new List<Room>();
+            Facilities = new List<HotelFacilities>();
         }
        
         public Guid Id { get; set; }
-        public string Name { get; set; } = String.Empty;
+        public string Name { get; set; } 
         public  List<HotelImage> Images { get; set; }
-        public string Location { get; set; } = String.Empty;
-        public string Rating { get; set; } = String.Empty;
-        public string Description { get; set; } = String.Empty;
+        public string Location { get; set; } 
+        public string Rating { get; set; } 
+        public string Description { get; set; }
         public decimal Price { get; set; }
         public bool Vacancies { get; set; }
         public  List<Room> Rooms { get; set; }

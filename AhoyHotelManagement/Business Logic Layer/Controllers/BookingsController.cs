@@ -17,6 +17,11 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Controllers
         {
             _bookingService = bookingService;
         }
+        /// <summary>
+        /// This endpoint for placing a booking.
+        /// </summary>
+        /// <param name="booking"></param>
+        /// <returns></returns>
         [HttpPost("BookHotel")]
         public async Task<ActionResult> BookHotel([FromBody] BookHotelDto booking)
         {

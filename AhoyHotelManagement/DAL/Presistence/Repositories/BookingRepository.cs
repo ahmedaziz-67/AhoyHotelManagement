@@ -4,10 +4,12 @@ using AhoyHotelManagement.DAL.Domain.Models;
 
 namespace AhoyHotelManagement.DAL.Presistence.Repositories
 {
+    #region Interface
     public interface IBookingRepository : IBaseRepository<Booking>
     {
     }
-
+    #endregion
+    #region Implementation
     public class BookingRepository : BaseRepository<Booking>, IBookingRepository
     {
         public BookingRepository(HotelContext context)
@@ -16,4 +18,5 @@ namespace AhoyHotelManagement.DAL.Presistence.Repositories
 
         }
     }
+    #endregion
 }

@@ -1,16 +1,17 @@
 ﻿using AhoyHotelManagement.DAL.Domain;
-using AhoyHotelManagement.DAL.Domain.Models;
 using AhoyHotelManagement.DAL.Presistence.Repositories;
 
 namespace AhoyHotelManagement.CommonUtils
 {
+    #region Interface
     public interface IUnitOfWork
     {
         IHotelRepository hotelRepository { get; }
         IBookingRepository bookingRepository { get; }
         void Save();
     }
-
+    #endregion
+    #region Implementation
     public class UnitOfWork : IUnitOfWork
     {
         private IHotelRepository _hotelRepository;
@@ -44,9 +45,11 @@ namespace AhoyHotelManagement.CommonUtils
                 return _bookingRepository;
             }
         }
+      
         public void Save()
         {
             _context.SaveChanges();
         }
     }
+    #endregion
 }

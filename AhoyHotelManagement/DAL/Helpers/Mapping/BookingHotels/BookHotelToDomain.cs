@@ -8,7 +8,11 @@ namespace AhoyHotelManagement.DAL.Helpers.Mapping.BookingHotels
     {
         public BookHotelToDomain()
         {
-            CreateMap<BookHotelDto, Booking>();
+            CreateMap<BookHotelDto, Booking>()
+                .ForMember(x => x.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
+                .ForMember(x => x.CardNumber, opt => opt.MapFrom(src => src.CardNumber))
+                .ForMember(x => x.CardBin, opt => opt.MapFrom(src => src.CardBin))
+                .ForMember(x => x.RoomId, opt => opt.MapFrom(src => src.RoomId));
         }
     }
 }

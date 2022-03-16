@@ -20,8 +20,13 @@ namespace AhoiHotelManagementTests.Tests.HotelTests
             _service = new HotelServiceMock();
             _controller = new HotelsController(_service);
         }
-      
+
         #region GetHotelByIdTest
+        /// <summary>
+        /// Test purpose: check that my GetHotel endpoint will response with an error if passed
+        /// to it invalid HotelId.
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task GetById_UnknownGuidPassed_ReturnsNotFoundResult()
         {
@@ -30,9 +35,14 @@ namespace AhoiHotelManagementTests.Tests.HotelTests
             // Assert
             Assert.IsType<BadRequestResult>(notFoundResult);
         }
-      
+
         #endregion
         #region CreateHotelTest
+        /// <summary>
+        /// Test purpose:check that my CreateHotel endpoint will response with an error if passed
+        /// to it invalid HotelObject.
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Add_InvalidObjectPassed_ReturnsBadRequest()
         {

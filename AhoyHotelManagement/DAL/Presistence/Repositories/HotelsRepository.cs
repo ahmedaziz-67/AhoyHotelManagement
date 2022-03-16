@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AhoyHotelManagement.DAL.Presistence.Repositories
 {
+    #region Interface
     public interface IHotelRepository : IBaseRepository<Hotel>
     {
         Task<Hotel> GetHotelDetails(Guid id);
@@ -12,7 +13,8 @@ namespace AhoyHotelManagement.DAL.Presistence.Repositories
         Task<List<Hotel>> GetHotelsByName(string name);
         Task<List<Hotel>> GetHotelsByLocation(string location);
     }
-
+    #endregion
+    #region Implementation
     public class HotelRepository : BaseRepository<Hotel>, IHotelRepository
     {
         public HotelRepository(HotelContext context)
@@ -57,4 +59,5 @@ namespace AhoyHotelManagement.DAL.Presistence.Repositories
             return result;
         }
     }
+    #endregion
 }

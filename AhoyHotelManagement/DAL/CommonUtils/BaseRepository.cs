@@ -6,6 +6,7 @@ using X.PagedList;
 
 namespace AhoyHotelManagement.CommonUtils
 {
+    #region interface
     public interface IBaseRepository<T>
     {
         Task AddAsync(T entity);
@@ -21,7 +22,8 @@ namespace AhoyHotelManagement.CommonUtils
            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null
            );
     }
-
+    #endregion
+    #region Implementation
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         protected HotelContext context { get; set; }
@@ -84,4 +86,5 @@ namespace AhoyHotelManagement.CommonUtils
                 .ToPagedListAsync(paginationParameters.PageNumber, paginationParameters.PageSize);
         }
     }
+    #endregion
 }

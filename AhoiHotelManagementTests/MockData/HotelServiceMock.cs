@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace AhoiHotelManagementTests.MockData
 {
+    /// <summary>
+    /// here i create a mock version of my hotel service to use for testing.
+    /// </summary>
     public class HotelServiceMock : IHotelService
     {
         private readonly List<Hotel> _hotel;
@@ -18,6 +21,7 @@ namespace AhoiHotelManagementTests.MockData
         IHotelService _hotelService;
         public HotelServiceMock()
         {
+            // here i initiate an instance of my domain with dummy data to use for my tests.
             _hotel = new List<Hotel>()
             {
                 new Hotel() { Id = new Guid("ab2bd817-98cd-4cf3-a80a-53ea0cd9c200"),
