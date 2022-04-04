@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace AhoyHotelManagement.Business_Logic_Layer.Services
 {
-    #region Service
+    #region Interfaces
     public interface IBookingService
     {
         Task<BookingResponseDto> BookHotel(BookHotelDto bookHotelDto);
