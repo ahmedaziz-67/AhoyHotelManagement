@@ -6,7 +6,7 @@ using AutoMapper;
 
 namespace AhoyHotelManagement.Business_Logic_Layer.Services
 {
-    #region Service
+    #region Interface
     public interface IHotelService
     {
         Task<GetHotelsDto> GetAllHotels(PaginationParameters paginationParameters);
