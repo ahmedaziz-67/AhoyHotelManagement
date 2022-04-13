@@ -27,10 +27,13 @@ namespace AhoyHotelManagement.Business_Logic_Layer.Services
         }
         public async Task CreateHotel(CreateHotelDto createHotelDto)
         {
-            
+            try
+            {
                 var hotelEntry = _mapper.Map<CreateHotelDto, Hotel>(createHotelDto);
                 await _unitOfWork.hotelRepository.AddAsync(hotelEntry);
                 _unitOfWork.Save();
+         }catch (Exception ex)
+         {
          
         }
  
